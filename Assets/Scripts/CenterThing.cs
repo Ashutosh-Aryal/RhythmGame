@@ -321,7 +321,6 @@ public class CenterThing : MonoBehaviour
         /* mouse rotation option
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(mouseWorldPosition.y - gameObject.transform.position.y, mouseWorldPosition.x - gameObject.transform.position.x) * Mathf.Rad2Deg;
-
         gameObject.transform.eulerAngles = new Vector3(90.0f - angle, 90.0f, 90.0f); */
     }
 }
