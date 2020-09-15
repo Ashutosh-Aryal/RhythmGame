@@ -255,55 +255,49 @@ public class CenterThing : MonoBehaviour
     private void CheckPressedKeys()
     {
         Vector3 newRotation = gameObject.transform.eulerAngles;
-        Vector3 newLaserRotation;
 
         Vector3 myPosition = gameObject.transform.position;
         Vector3 directionVector = m_CurrentDirection;
 
-        if(Input.GetKey(UP_KEY))
-        {
+        bool isPressingUpKey = Input.GetKey(UP_KEY);
+        bool isPressingLeftKey = Input.GetKey(LEFT_KEY);
+        bool isPressingRightKey = Input.GetKey(RIGHT_KEY);
+        bool isPressingDownKey = Input.GetKey(DOWN_KEY);
 
-            if (Input.GetKey(LEFT_KEY))
-            {
-                newRotation = UP_LEFT_ROTATION;
-                newLaserRotation = LASER_UP_LEFT_ROTATION;
-                directionVector = new Vector3(-5.0f, 6.0f);
-            }
-            else if (Input.GetKey(RIGHT_KEY))
-            {
-                newRotation = UP_RIGHT_ROTATION;
-                newLaserRotation = LASER_UP_RIGHT_ROTATION;
-                directionVector = new Vector3(5.0f, 6.0f);
-            }
-            else if(!Input.GetKey(DOWN_KEY))
-            {
-                newRotation = UP_ROTATION;
-                newLaserRotation = LASER_UP_ROTATION;
-                directionVector = new Vector3(0.0f, 1.0f);
-            }
+        bool isGoingBottomRightCorner = isPressingDownKey && isPressingRightKey;
+        bool isGoingBottomLeftCorner = isPressingDownKey && isPressingLeftKey;
+        bool isGoingTopRightCorner = isPressingUpKey && isPressingRightKey;
+        bool isGoingTopLeftCorner = isPressingUpKey && isPressingLeftKey;
 
-        } else if(Input.GetKey(DOWN_KEY))
+        if(isGoingBottomLeftCorner)
         {
-            if (Input.GetKey(LEFT_KEY))
-            {
-                newRotation = DOWN_LEFT_ROTATION;
-                directionVector = new Vector3(-5.0f, -6.0f);
-            }
-            else if (Input.GetKey(RIGHT_KEY))
-            {
-                newRotation = DOWN_RIGHT_ROTATION;
-                directionVector = new Vector3(5.0f, -6.0f);
-            }
-            else
-            {
-                newRotation = DOWN_ROTATION;
-                directionVector = new Vector3(0.0f, -1.0f);
-            }
-        } else if(Input.GetKey(LEFT_KEY))
+            newRotation = DOWN_LEFT_ROTATION;
+            directionVector = -Vector2.one;
+        } else if(isGoingBottomRightCorner)
+        {
+            newRotation = DOWN_RIGHT_ROTATION;
+            directionVector = new Vector3(1.0f, -1.0f);
+        } else if(isGoingTopLeftCorner)
+        {
+            newRotation = UP_LEFT_ROTATION;
+            directionVector = new Vector3(-1.0f, 1.0f);
+        } else if(isGoingTopRightCorner)
+        {
+            newRotation = UP_RIGHT_ROTATION;
+            directionVector = Vector2.one;
+        } else if(isPressingDownKey)
+        {
+            newRotation = DOWN_ROTATION;
+            directionVector = new Vector3(0.0f, -1.0f);
+        } else if(isPressingUpKey)
+        {
+            newRotation = UP_ROTATION;
+            directionVector = new Vector3(0.0f, 1.0f);
+        }  else if(isPressingLeftKey)
         {
             newRotation = LEFT_ROTATION;
             directionVector = new Vector3(-1.0f, 0.0f);
-        } else if(Input.GetKey(RIGHT_KEY))
+        } else if(isPressingRightKey)
         {
             newRotation = RIGHT_ROTATION;
             directionVector = new Vector3(1.0f, 0.0f);
